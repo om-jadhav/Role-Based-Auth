@@ -1,16 +1,8 @@
 const express = require("express");
-const userRoutes =
-  require("./routes/userRoutes");
 
-app.use("/api", userRoutes);
+const protect = require("../middleware/authMiddleware");
 
-const protect = require(
-  "../middleware/authMiddleware"
-);
-
-const authorizeRoles = require(
-  "../middleware/roleMiddleware"
-);
+const authorizeRoles = require("../middleware/roleMiddleware");
 
 const router = express.Router();
 
@@ -29,10 +21,7 @@ router.get(
 router.get(
   "/employee/dashboard",
   protect,
-  authorizeRoles(
-    "admin",
-    "employee"
-  ),
+  authorizeRoles("admin", "employee"),
   (req, res) => {
     res.json({
       message: "Welcome Employee",
